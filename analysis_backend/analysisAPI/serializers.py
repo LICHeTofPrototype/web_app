@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import HeartBeatData
+from .models import HeartBeat
 
 class analysisAPISerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,4 +10,4 @@ class analysisAPISerializer(serializers.ModelSerializer):
             'status',
             'strage_file_name',
         )
-        model = HeartBeatData
+        model = HeartBeat
