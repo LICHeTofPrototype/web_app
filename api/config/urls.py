@@ -1,4 +1,4 @@
-"""analysis_backend URL Configuration
+"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -15,14 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-# from analysis_backend.analysisAPI import views
-
-# router = routers.DefaultRouter()
-# router.register(r'heart_beat_data', analysisAPIViewSet)
 
 urlpatterns = [
-    # path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('analysisAPI/', include('analysisAPI.urls')),
+    path('api/calc_pnn/', include('api.calc_pnn.urls')),
 ]
