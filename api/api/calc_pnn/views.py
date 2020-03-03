@@ -9,7 +9,8 @@ from rest_framework import status
 from api.measurement.models import Measurement
 from api.account.models import CustomUser 
 from .models import PnnData
-#from .serializers import CalcPnnSerializer
+from api.account.serializers import UserSerializer
+from .serializers import PnnDataSerializer
 from . import pnn
 from django.utils import timezone
 import logging
@@ -19,10 +20,10 @@ class CalcPnnAPI(APIView):
     logger = logging.getLogger("command")
     logger.info(msg)
 
-  def get(self, request, user_id, measurement_id, request_index, format=None):
-    # user_obj = CustomUser.objects.get(
-    #   id = user_id
-    # )
+  def get(self, request, user_id, format=None):
+    user_obj = CustomUser.objects.get(
+      id = user_id
+    )
 
     # measurement_obj = Measurement.objects.get(
     #   id = measurement_id,
@@ -36,9 +37,10 @@ class CalcPnnAPI(APIView):
 
 
     # serializer = PnnDataSerializer(pnn_data_obj, many=True)
-    return Response("OK!!!!!!!!!!!!!!!!")#(serializer.data, status=status.HTTP_200_OK)
+    serializer = UserSerializer(user_obj)
+    return Response(serializer.data)#(serializer.data, status=status.HTTP_200_OK)
 
-  def post(self, request, user_id, measurement_id, request_index, format=None):
+  def post(self, request, user_id, format=None):
     #print ("VIEWS request.data = ", request.data)
     
     # TO DO Test においてデータを受ける時にrequestがOrderDict型で受けることになるので，下の方式で読み込む必要あり． 
@@ -59,18 +61,18 @@ class CalcPnnAPI(APIView):
     pnn_time, pnn50 = pnn.cal_pnn(peak_time, RRI)
     print ("View Pnn50 = ", pnn50)
 
-    # user_obj, created = CustomUser.objects.update_or_create(
-    #   id = user_id
-    # )
-    # measurement_obj, created = Measurement.objects.update_or_create(
-    #   user = user_obj,
-    #   location = location
-    # )
-    # pnn_data_obj = PnnData.objects.create(
-    #   measurement = measurement_obj,
-    #   pnn = pnn50,
-    #   pnn_time = pnn_time
-    # )
+    user_obj, created = CustomUser.objects.update_or_create(
+      id = user_id
+    )
+    measurement_obj, created = Measurement.objects.update_or_create(
+      user = user_obj
+      #location = location
+    )
+    pnn_data_obj = PnnData.objects.create(
+      measurement = measurement_obj,
+      pnn = pnn50,
+      pnn_time = pnn_time
+    )
 
     res = {"pnn": float(pnn50), "time": float(pnn_time)}
     json_res = json.dumps(res) 

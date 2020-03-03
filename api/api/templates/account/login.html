@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block page_title %}ログイン{% endblock %}
+{% block extra_css %}
+<style type="text/css">
+  .container > .grid {
+    height: 100%;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <form action="{% url 'accounts: login' %}" method="post" class="ui form">
+      # 処理
+    </form>
+  </div>
+</div>
+{% endblock %}
