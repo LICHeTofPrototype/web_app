@@ -25,7 +25,7 @@ SECRET_KEY = 'r22&h63=1=h52$$p^2nmz7&51omo(%_+x)_73#m2i@auc#9d*y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.2.105"]
+ALLOWED_HOSTS = ["192.168.2.105"]#, "ad0b4d97.ngrok.io"]
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'api.calc_pnn.apps.CalcPnnConfig',
     'api.measurement.apps.MeasurementConfig',
     'api.account.apps.AccountConfig',
+    'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
 ]
 
