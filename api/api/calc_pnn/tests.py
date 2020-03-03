@@ -24,17 +24,17 @@ class Test(APITestCase):
     time_data = [int(s) for s in time_list]
     beat_data = [int(s) for s in beat_list]
     #print ("TEST time_data = ", time_data)
-    data = {"time": time_data, "beat": beat_data}
+    data = {"time": time_data, "beat": beat_data, "location": "yokohama"}
     print ("Test data = ", data)
     
-    # data = {"time": list(time), "beat": list(beat)}
-    # test_file = open("test_data.txt", "w")
-    # json.dump(data, test_file, indent=2)
+    data = {"time": list(time), "beat": list(beat)}
+    test_file = open("./test_data.txt", "w")
+    json.dump(data, test_file, indent=2)
     
     user_id = 1
     measurement_id =2
     request_index = 3
-    url = reverse("heart-beat", args=(user_id, measurement_id, request_index, ))
+    url = reverse("calc-pnn", args=(user_id, measurement_id, request_index, ))
     print ("URL = ", url)
     response = self.client.post(url, data)
     print(response.data) 
