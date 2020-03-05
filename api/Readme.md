@@ -45,7 +45,17 @@ mkdir appname
 cd ..
 python manage.py appname {$directory}/appname
 ```
-  
+app作成時，projectディレクトリの下にappディレクトリができる．  
+ディレクトリ構成は次のようになる．
+```
+/project_directory/config/settings.py (各種設定が記述されている．作成したappを登録するのもこのファイル)  
+                         /urls.py (urlのルーティングを設定する大元のファイル．)  
+/project_directory/appname/views.py (MVCで言うControlerを記述するファイル)                          
+                          /models.py (MVCでいうModelを記述するファイル)  
+                          /apps.py (app nameを記述するファイル)    
+                          /urls.py (app以下のurlの設定をするファイル)  
+                          /tests.py (appのtestをするファイル)
+```
 ## Shellの起動・停止  
 ```php
 python manage.py shell (起動)
@@ -73,6 +83,6 @@ users = User.objects.filter(field1="", field2="", ...)
 products = Product.objects.filter(name1="hogehoge", name2="fumufumu")
 * IN条件で取得 
 products = Product.objects.filter(name1__in=["hogehoge", fumufumu"])
-* OR条件で取得 
+* OR条件で取得  
 from django.db.models import Q  
 products = Product.objects.filter(Q(name1="hogehoge") | Q(name2="fumufumu"))
