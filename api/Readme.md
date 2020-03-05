@@ -1,5 +1,8 @@
 ## python3をインストール  
-brew install python (Mac)  
+Macの場合，下記のコマンドを実行する．  
+```php
+brew install python
+```  
 "brew: command not found" となった場合は，下記のサイトからコマンドをコピペしてHomebrew をインストールする必要あり．  
 https://brew.sh/index_ja  
   
@@ -29,4 +32,21 @@ source ~/.bash_profile
 pip install django
 pip install djangorestframework
 ```
-
+  
+## runsernerの起動  
+```php
+python manage.py runserver 192.168.2.105:8000
+```
+  
+## appの作成  
+```php
+cd {$directory}
+mkdir appname
+cd ..
+python manage.py appname {$directory}/appname
+```
+  
+## Shellの起動  
+```php
+python manage.py shell
+```
