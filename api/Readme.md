@@ -46,7 +46,33 @@ cd ..
 python manage.py appname {$directory}/appname
 ```
   
-## Shellの起動  
+## Shellの起動・停止  
 ```php
-python manage.py shell
+python manage.py shell (起動)
+exit() (停止)
 ```
+  
+## Migrationについて  
+* modelの変更をした場合に実行するコマンド  
+```php
+python manage.py makemigrations appname
+```
+* DBに変更を登録するコマンド  
+```php
+python manage.py migrate
+```
+
+## クエリセットについて  
+* Objectの作成  
+User.objects.create(field1="", field2="", ...)  
+* 単一のObjectの取得  
+user = User.objects.get(field1="", field2="", ...)  
+* 複数のObjectの取得  
+users = User.objects.filter(field1="", field2="", ...)  
+* AND条件で取得 
+products = Product.objects.filter(name1="hogehoge", name2="fumufumu")
+* IN条件で取得 
+products = Product.objects.filter(name1__in=["hogehoge", fumufumu"])
+* OR条件で取得 
+from django.db.models import Q  
+products = Product.objects.filter(Q(name1="hogehoge") | Q(name2="fumufumu"))
