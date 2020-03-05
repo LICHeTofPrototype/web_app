@@ -42,10 +42,11 @@ class CalcPnnAPI(APIView):
 
   def post(self, request, user_id, format=None):
     #print ("VIEWS request.data = ", request.data)
-    
+    print (request.data)
     # TO DO Test においてデータを受ける時にrequestがOrderDict型で受けることになるので，下の方式で読み込む必要あり． 
     #time = request.data.getlist("time")
     #heart_beat = request.data.getlist("beat")
+    # print ("Request Data = ", request.data)
     time = request.data["time"]
     heart_beat = request.data["beat"]
     location = "yokohama"
@@ -60,13 +61,15 @@ class CalcPnnAPI(APIView):
     print ("In views.py peak_time = ", peak_time)
     pnn_time, pnn50 = pnn.cal_pnn(peak_time, RRI)
     print ("View Pnn50 = ", pnn50)
-
-    user_obj, created = CustomUser.objects.update_or_create(
+    print ("User id type =", type(user_id))
+    user_id = int(user_id)
+    print ("User id Reviced type =", type(user_id))
+    user_obj = CustomUser.objects.get(
       id = user_id
     )
-    measurement_obj, created = Measurement.objects.update_or_create(
+
+    measurement_obj, created = Measurement.objects.get_or_create(
       user = user_obj
-      #location = location
     )
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
@@ -76,4 +79,4 @@ class CalcPnnAPI(APIView):
 
     res = {"pnn": float(pnn50), "time": float(pnn_time)}
     json_res = json.dumps(res) 
-    return Response(json_res, status=status.HTTP_201_CREATED)
+    return Response("Data was registered", status=status.HTTP_201_CREATED)

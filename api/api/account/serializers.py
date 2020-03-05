@@ -6,5 +6,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = [
             'id',
+            'username',
+            'first_name',
+            'last_name',
             'login_count',
         ]
