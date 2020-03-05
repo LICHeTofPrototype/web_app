@@ -38,7 +38,7 @@ WiFiとの接続 WiFiConnect() ( WiFiConnect.ino ),
 使い方
 *************************************************
 
-(1)ESP32の, 3.3V, GND, 25pinにセンサピンを挿して, シリアル通信を行うためにPCと接続.
+(1)ESP32の, 3.3V, GND, 34pinにセンサピンを挿して, シリアル通信を行うためにPCと接続.
 
 (2)ESP32とマイコン間で通信をするためにBoardManagerから「esp32 by Espressif Systems 1.0.4」をインストール
 

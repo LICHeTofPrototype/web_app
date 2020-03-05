@@ -1,20 +1,22 @@
 
 #include <WiFi.h>
+WiFiClient client;
 
 void WiFiConnect(){
-  WiFi.mode(WIFI_STA);
+  
   WiFi.begin(ssid, password); 
   
   while(WiFi.status() != WL_CONNECTED){
     delay(500);
     Serial.print(".");
   }
+   
+   Serial.print("\n");
+   Serial.println("WiFi Connected");
+   Serial.print("IP Address: ");
+   Serial.println(WiFi.localIP()); 
+   Serial.print("\n");
   
-  Serial.print("\n");
-  Serial.println("WiFi Connected");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP()); 
-  Serial.print("\n");
 }
 
 
