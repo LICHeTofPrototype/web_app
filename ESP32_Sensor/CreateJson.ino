@@ -3,27 +3,26 @@
 
 //***********************************
 int timeInterval = 50;  //ms
-int arrayNum = 20;  //配列に入れる要素数
+int arrayNum = 100;  //配列に入れる要素数
 //arrayNum * 2 以上の数値をJSON_ARRAY_SIZE(**)に入れてね
 //***********************************
 
 void CreateJson(){
 
-  StaticJsonDocument<JSON_ARRAY_SIZE(50) + JSON_OBJECT_SIZE(2)> root;
+  StaticJsonDocument<JSON_ARRAY_SIZE(200) + JSON_OBJECT_SIZE(2)> root;
   JsonArray Time = root.createNestedArray("time");
   JsonArray Beat = root.createNestedArray("beat");
-
+  
   for(int i=1 ; i <= arrayNum; i++){
     SampleCount += timeInterval;
-    
-    float Signal = analogRead(SensorPin);
+    float Signal = analogRead(SensorPin);  
+      
     Time.add(SampleCount);
-    Beat.add(Signal/4);
+    Beat.add(Signal);
     
     delay(timeInterval);
   }
-
-
+  
   Serial.println("****************************");
   
   serializeJson(root, Serial);
