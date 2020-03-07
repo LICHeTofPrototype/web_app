@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from api.measurement.models import Measurement
-from api.account.models import CustomUser 
+from api.account.models import User 
 from api.calc_pnn.models import PnnData
 from api.account.serializers import UserSerializer
 from api.calc_pnn.serializers import PnnDataSerializer
@@ -20,7 +20,7 @@ class GetPnnAPI(APIView):
     logger.info(msg)
 
   def get(self, request, user_id, measurement_id, request_index, format=None):
-    user_obj = CustomUser.objects.get(
+    user_obj = User.objects.get(
       id = user_id
     )
     

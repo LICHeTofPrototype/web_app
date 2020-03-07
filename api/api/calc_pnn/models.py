@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.utils import timezone
-from api.account.models import CustomUser
+# from api.account.models import User
 from api.measurement.models import Measurement
 
 class PnnData(models.Model):

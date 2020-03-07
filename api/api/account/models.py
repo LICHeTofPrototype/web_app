@@ -30,9 +30,9 @@ class UserManager(BaseUserManager):
         return self._create_user(username, email, password, True, True, 
                                 **extra_fields)
 
-class CustomUser(AbstractUser):
+class User(AbstractUser):
   class Meta:
-    db_table = "custom_user"
+    db_table = "ser"
     
   SEX_CHOICE = (("M", 'Male'), ("F", 'Female'))
   login_count = models.IntegerField(verbose_name="login_count", default=0)
