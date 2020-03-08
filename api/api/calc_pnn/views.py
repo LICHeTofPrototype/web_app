@@ -64,7 +64,7 @@ class CalcPnnAPI(APIView):
     print ("User id type =", type(user_id))
     user_id = int(user_id)
     print ("User id Reviced type =", type(user_id))
-    user_obj = CustomUser.objects.get(
+    user_obj = User.objects.get(
       id = user_id
     )
 
