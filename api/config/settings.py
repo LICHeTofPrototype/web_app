@@ -44,6 +44,13 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
+}
+
+
 AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [

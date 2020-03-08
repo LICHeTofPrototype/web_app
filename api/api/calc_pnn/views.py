@@ -14,8 +14,11 @@ from .serializers import PnnDataSerializer
 from . import pnn
 from django.utils import timezone
 import logging
+from rest_framework.parsers import JSONParser  
 
 class CalcPnnAPI(APIView):
+  parser_classes = [JSONParser]
+    
   def info(msg):
     logger = logging.getLogger("command")
     logger.info(msg)
@@ -40,7 +43,7 @@ class CalcPnnAPI(APIView):
     serializer = UserSerializer(user_obj)
     return Response(serializer.data)#(serializer.data, status=status.HTTP_200_OK)
 
-  def post(self, request, user_id, format=None):
+  def post(self, request, user_id, format=json):
     #print ("VIEWS request.data = ", request.data)
     print (request.data)
     # TO DO Test においてデータを受ける時にrequestがOrderDict型で受けることになるので，下の方式で読み込む必要あり． 
