@@ -12,22 +12,28 @@ from .models import PnnData
 from api.account.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
+import numpy as np
 from django.utils import timezone
 import logging
 from rest_framework.parsers import JSONParser  
 
 class CalcPnnAPI(APIView):
   parser_classes = [JSONParser]
-    
+
   def info(msg):
     logger = logging.getLogger("command")
     logger.info(msg)
+
+  def normalization(self, beat_data):
+    max_value = np.max(beat_data)
+    min_value = np.min(beat_data)
+    normalized_data = (beat_data - min_value)/(max_value - min_value)
+    return normalized_data
 
   def get(self, request, user_id, format=None):
     user_obj = User.objects.get(
       id = user_id
     )
-
     # measurement_obj = Measurement.objects.get(
     #   id = measurement_id,
     #   user = user_obj
@@ -51,15 +57,26 @@ class CalcPnnAPI(APIView):
     #heart_beat = request.data.getlist("beat")
     # print ("Request Data = ", request.data)
     time = request.data["time"]
-    heart_beat = request.data["beat"]
-    location = "yokohama"
-    
-    beat_data = [int(s) for s in heart_beat]
-    time_data = [int(s) for s in time]
-    print ("View Heart_beat = ", beat_data[0:3])
-    print ("View Time = ", time_data[0:3])
+    #beat_time = request.data["beat_time"]
+    beat = request.data["beat"]
 
-    peak_time, RRI = pnn.find_RRI(time_data, beat_data)
+    location = "yokohama"
+    print ("START!!!!!!!")
+    for b in beat:
+      print ("b type", type(b))
+      break
+
+    print ("beat_data type= ", type(beat))
+    print ("beat_data = ", beat)
+    # beat_data = [int(s) for s in beat]
+    time_data = list(range(50, len(beat)*50 +50, 50))
+    normalized_data = self.normalization(beat)
+    print ("normalized data = ", normalized_data)
+
+    # print ("View Heart_beat = ", beat_data[0:3])
+    # print ("View Time = ", time_data[0:3])
+
+    peak_time, RRI = pnn.find_RRI(time_data, normalized_data)
     print ("In views.py RRI = ", RRI)
     print ("In views.py peak_time = ", peak_time)
     pnn_time, pnn50 = pnn.cal_pnn(peak_time, RRI)
@@ -76,10 +93,13 @@ class CalcPnnAPI(APIView):
     )
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
+      time = time, 
       pnn = pnn50,
       pnn_time = pnn_time
     )
 
     res = {"pnn": float(pnn50), "time": float(pnn_time)}
     json_res = json.dumps(res) 
-    return Response("Data was registered", status=status.HTTP_201_CREATED)
+    serializer = PnnDataSerializer(pnn_data_obj)
+    # return Response("Data was registered", status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
