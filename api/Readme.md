@@ -10,7 +10,7 @@ https://brew.sh/index_ja
 ```php
 brew update
 ```
-  
+
 ~/.bash_profile に次を記述．    
 ```php
 export PATH=/usr/local/bin:$PATH
@@ -21,10 +21,32 @@ alias pip="pip3"
 * pathについて困った場合は下記を参照．
 https://qiita.com/soarflat/items/d5015bec37f8a8254380  
 
+## pyenvのインストール(必要あれば)
+```php
+brew install pyenv
+```
+~/.bash_profileに次を記述
+```php
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"<-これがないとpythonコマンドが別のディレクトリを参照しようとする
+```
+ローカルのレポジトリごとにpythonのバージョンを変更したい場合に以下のコマンドを流す
+```php
+cd [ローカルレポジトリ]
+pyenv local [pythonのバージョン]
+```
+* pyenvで管理しているpythonのバージョンを確認する場合は以下を流す
+```php
+pyenv versions
+```
+
 terminal にて次のコマンドを実行．
 ```php
 source ~/.bash_profile  
 ```
+* pyenvについては
+https://qiita.com/koooooo/items/b21d87ffe2b56d0c589b
   
 ## Djangoのインストール  
 下記のコマンドでDjangoおよびDjango REST frameworkをインストール．  
