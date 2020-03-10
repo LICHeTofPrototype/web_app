@@ -108,3 +108,11 @@ products = Product.objects.filter(name1__in=["hogehoge", fumufumu"])
 * OR条件で取得  
 from django.db.models import Q  
 products = Product.objects.filter(Q(name1="hogehoge") | Q(name2="fumufumu"))
+
+
+
+## 仕様
+- htmlにhamlを採用
+1. vscodeで表示する場合「Better Haml」エクステンションをインストール
+1. vscode開く > code > preferences > extensions > 「Better Haml」で検索
+
