@@ -5,6 +5,6 @@ from users.views import signin, user_info
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/signin', signin),
-    path('api/v1/signin', user_info),
+    path('/v1/signin', signin),
+    path('/v1/signin', user_info),
 ]
