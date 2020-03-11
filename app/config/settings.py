@@ -90,13 +90,36 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dbname',
+        'USER': 'dbuser',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
+# To Do .envファイルから読み込む形式に変更
+# DATABASES = {
+#   'default': {
+#       # 環境変数を要設定
+#       'ENGINE': 'django.db.backends.mysql',
+#       'NAME': os.environ.get('LA_DB_NAME', ''),
+#       'USER': os.environ.get('LA_DB_USER', ''),
+#       'PASSWORD': os.environ.get('LA_DB_PASS', ''),
+#       'HOST': os.environ.get('LA_DB_HOST', ''),
+#       'PORT': os.environ.get('LA_DB_PORT', ''),
+#       'TEST': {
+#           'NAME': 'test_database',
+#       },
+#       'OPTIONS' : {
+#           'charset' : 'utf8mb4',
+#       },
+#   }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -122,7 +145,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
