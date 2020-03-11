@@ -25,7 +25,7 @@ SECRET_KEY = 'r22&h63=1=h52$$p^2nmz7&51omo(%_+x)_73#m2i@auc#9d*y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.2.111","127.0.0.1","8e522fd7.ngrok.io","192.168.0.69"]
+ALLOWED_HOSTS = ["192.168.2.111","127.0.0.1","8e522fd7.ngrok.io","192.168.0.20"]
 
 
 # Application definition
@@ -68,8 +68,8 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': ['./templates'],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -77,7 +77,12 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': (
+                'hamlpy.template.loaders.HamlPyFilesystemLoader',
+                'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+            ), 
         },
+        
     },
 ]
 
