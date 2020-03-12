@@ -39,19 +39,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.calc_pnn.apps.CalcPnnConfig',
     'api.measurement.apps.MeasurementConfig',
-    'api.account.apps.AccountConfig',
+    'front.account.apps.AccountConfig',
     'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'front.user_manager.apps.UserManagerConfig',
+    'front.user.apps.UserConfig',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'front.user.authentication.ExpiringTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
-
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,10 +70,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+API_TEMPLATE_DIR = os.path.join(BASE_DIR, 'api/templates')
+FRONT_TEMPLATE_DIR = os.path.join(BASE_DIR, 'front/templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates'],
+        'DIRS': [API_TEMPLATE_DIR, FRONT_TEMPLATE_DIR],
         # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

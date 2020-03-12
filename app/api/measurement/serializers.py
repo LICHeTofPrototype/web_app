@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Measurement
-from api.account.serializers import UserSerializer
+from front.user.serializers import UserSerializer
 
 class MeasurementSerializer(serializers.ModelSerializer):
     user = UserSerializer()

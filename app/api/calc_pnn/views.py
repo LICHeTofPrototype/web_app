@@ -7,9 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from api.measurement.models import Measurement
-from api.account.models import User 
+from front.user.models import User 
 from .models import PnnData
-from api.account.serializers import UserSerializer
+from front.user.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
 from django.utils import timezone
