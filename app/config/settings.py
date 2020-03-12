@@ -39,17 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.calc_pnn.apps.CalcPnnConfig',
     'api.measurement.apps.MeasurementConfig',
-    'api.account.apps.AccountConfig',
+    'front.account.apps.AccountConfig',
     'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'account.authentication.ExpiringTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
-
 
 AUTH_USER_MODEL = 'account.User'
 
