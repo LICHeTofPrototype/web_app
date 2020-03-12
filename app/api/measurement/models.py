@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.utils import timezone
-from api.account.models import User
+from front.account.models import User
 
 class Measurement(models.Model):
   """Measurement Table"""
