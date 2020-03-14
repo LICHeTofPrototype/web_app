@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/calc_pnn/', include('api.calc_pnn.urls')),
-    path('api/get_pnn/', include('api.get_pnn.urls')),
+    path('v1/api/calc_pnn/', include('api.calc_pnn.urls')),
+    path('v1/api/get_pnn/', include('api.get_pnn.urls')),
+    path('v1/account/', include('front.account.urls')),
 ]

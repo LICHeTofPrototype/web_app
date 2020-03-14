@@ -1,10 +1,11 @@
 from django.contrib import admin
+from . import views
 from django.urls import path
-from users.views import signin, user_info
-
+from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/v1/signin', signin),
-    path('/v1/signin', user_info),
+    path('signup/', views.SignUpAPI.as_view(), name='sign-up'),
+    path('signin/', views.SignInAPI.as_view(), name="sign-in"),
+    path('signout/', views.SignOutAPI.as_view(), name='sign-out'),
 ]

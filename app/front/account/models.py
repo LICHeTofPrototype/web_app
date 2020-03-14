@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
@@ -15,18 +14,21 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, full_name, password=None):
+    
+    def create_user(self, email, password, username, first_name, last_name):
         if not username:
             raise ValueError('Users must have an username')
         elif not email:
             raise ValueError('Users must have an email address')
-
+        elif not password:
+            raise ValueError('Users must have an password')
+        
         user = self.model(
             username = username,
             email = self.normalize_email(email),
-            full_name = full_name,
+            first_name = first_name,
+            last_name = last_name
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -38,13 +40,12 @@ class UserManager(BaseUserManager):
             email,
             password=password,
         )
-        user.is_admin = True
+        user.is_super = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-
-    # uuid = models.UUIDField(default=uuid_lib.uuid4,primary_key=True, editable=False)
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
@@ -79,11 +80,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    SEX_CHOICE = (("M", 'Male'), ("F", 'Female'))
-    login_count = models.IntegerField(verbose_name="login_count", default=0)
-    which_sex = models.CharField(max_length=1, verbose_name="sex", blank=True)
-    birth_date = models.DateField(verbose_name="birth_date", blank=True)
-    age = models.IntegerField(verbose_name="age", blank=True)
 
     objects = UserManager()
 
