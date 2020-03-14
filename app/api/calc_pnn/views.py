@@ -7,14 +7,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from api.measurement.models import Measurement
-from api.account.models import User 
+from django.contrib.auth import get_user_model
+from django.db import models 
 from .models import PnnData
-from api.account.serializers import UserSerializer
+from front.account.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
 from django.utils import timezone
 import logging
 from rest_framework.parsers import JSONParser  
+
+User = get_user_model()
 
 class CalcPnnAPI(APIView):
   parser_classes = [JSONParser]
