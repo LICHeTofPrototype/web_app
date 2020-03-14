@@ -44,8 +44,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    uuid = models.UUIDField(default=uuid_lib.uuid4,
-                            primary_key=True, editable=False)
+    # uuid = models.UUIDField(default=uuid_lib.uuid4,primary_key=True, editable=False)
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
