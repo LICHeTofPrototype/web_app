@@ -64,12 +64,13 @@ class CalcPnnAPI(APIView):
     beat_data = [int(s) for s in heart_beat]
     time_data = [i for i in range(0, len(beat_data)*10, 10)]
     print ("beat len", len(beat_data))
-    print ("time len", len(time_data))
-    print ("time_data =", time_data)
+    # print ("time len", len(time_data))
+    # print ("time_data =", time_data)
 
-    print ("View Heart_beat = ", beat_data[0:3])
-    print ("View Time = ", time_data[0:3])
-
+    # print ("View Heart_beat = ", beat_data[0:3])
+    # print ("View Time = ", time_data[0:3])
+    
+    normalized_data = self.normalization(beat_data)
     peak_time, RRI = pnn.find_RRI(time_data, normalized_data)
     print ("In views.py RRI = ", RRI)
     print ("In views.py peak_time = ", peak_time)
@@ -87,11 +88,7 @@ class CalcPnnAPI(APIView):
     )
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
-<<<<<<< HEAD:api/api/calc_pnn/views.py
-      time = time, 
-=======
       time = time,
->>>>>>> master:app/api/calc_pnn/views.py
       pnn = pnn50,
       pnn_time = pnn_time
     )
