@@ -47,18 +47,20 @@ class CalcPnnAPI(APIView):
     return Response(serializer.data)#(serializer.data, status=status.HTTP_200_OK)
 
   def post(self, request, user_id, format=json):
-    #print ("VIEWS request.data = ", request.data)
-    print (request.data)
     # TO DO Test においてデータを受ける時にrequestがOrderDict型で受けることになるので，下の方式で読み込む必要あり． 
-    #time = request.data.getlist("time")
-    #heart_beat = request.data.getlist("beat")
-    # print ("Request Data = ", request.data)
+    print ("Request Data = ", request.data)
     time = request.data["time"]
     heart_beat = request.data["beat"]
+    #time = request.data.getlist("time")
+    #heart_beat = request.data.getlist("beat")
     location = "yokohama"
     
     beat_data = [int(s) for s in heart_beat]
-    time_data = [int(s) for s in time]
+    time_data = [i for i in range(0, len(beat_data)*10, 10)]
+    print ("beat len", len(beat_data))
+    print ("time len", len(time_data))
+    print ("time_data =", time_data)
+
     print ("View Heart_beat = ", beat_data[0:3])
     print ("View Time = ", time_data[0:3])
 
@@ -79,6 +81,7 @@ class CalcPnnAPI(APIView):
     )
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
+      time = time,
       pnn = pnn50,
       pnn_time = pnn_time
     )

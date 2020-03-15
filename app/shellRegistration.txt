@@ -1,4 +1,4 @@
-from api.account.models import CustomUser
+from front.account.models import User
 from api.measurement.models import Measurement
 from api.calc_pnn.models import PnnData
 

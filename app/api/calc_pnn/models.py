@@ -8,5 +8,6 @@ class PnnData(models.Model):
   """心拍数データ"""
   # user = models.ForeignKey(User, on_delete=models.CASCADE)
   measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
+  time = models.TimeField()
   pnn_time = models.FloatField(verbose_name="pnn_time")
   pnn = models.FloatField(verbose_name="pnn")
