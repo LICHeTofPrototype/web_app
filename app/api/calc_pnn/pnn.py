@@ -6,7 +6,7 @@ from scipy.signal import find_peaks
 #               Find RRI          
 #*******************************************************
 def find_RRI(time, data):       
-    peaks, _ = find_peaks(data, distance=20, prominence=0.5)
+    peaks, _ = find_peaks(data, distance=20, prominence=0.45)
     print ("In pnn.py peaks = ", peaks)
     peak_time = np.array(time)[peaks] * 0.001
     print ("In pnn.py peak_time = ", peak_time)
