@@ -13,6 +13,7 @@ from .models import PnnData
 from front.account.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
+import numpy as np
 from django.utils import timezone
 import logging
 from rest_framework.parsers import JSONParser  
@@ -21,16 +22,21 @@ User = get_user_model()
 
 class CalcPnnAPI(APIView):
   parser_classes = [JSONParser]
-    
+
   def info(msg):
     logger = logging.getLogger("command")
     logger.info(msg)
+
+  def normalization(self, beat_data):
+    max_value = np.max(beat_data)
+    min_value = np.min(beat_data)
+    normalized_data = (beat_data - min_value)/(max_value - min_value)
+    return normalized_data
 
   def get(self, request, user_id, format=None):
     user_obj = User.objects.get(
       id = user_id
     )
-
     # measurement_obj = Measurement.objects.get(
     #   id = measurement_id,
     #   user = user_obj
@@ -47,22 +53,25 @@ class CalcPnnAPI(APIView):
     return Response(serializer.data)#(serializer.data, status=status.HTTP_200_OK)
 
   def post(self, request, user_id, format=json):
-    #print ("VIEWS request.data = ", request.data)
-    print (request.data)
     # TO DO Test においてデータを受ける時にrequestがOrderDict型で受けることになるので，下の方式で読み込む必要あり． 
-    #time = request.data.getlist("time")
-    #heart_beat = request.data.getlist("beat")
-    # print ("Request Data = ", request.data)
+    print ("Request Data = ", request.data)
     time = request.data["time"]
     heart_beat = request.data["beat"]
+    #time = request.data.getlist("time")
+    #heart_beat = request.data.getlist("beat")
     location = "yokohama"
     
     beat_data = [int(s) for s in heart_beat]
-    time_data = [int(s) for s in time]
-    print ("View Heart_beat = ", beat_data[0:3])
-    print ("View Time = ", time_data[0:3])
+    time_data = [i for i in range(0, len(beat_data)*10, 10)]
+    print ("beat len", len(beat_data))
+    # print ("time len", len(time_data))
+    # print ("time_data =", time_data)
 
-    peak_time, RRI = pnn.find_RRI(time_data, beat_data)
+    # print ("View Heart_beat = ", beat_data[0:3])
+    # print ("View Time = ", time_data[0:3])
+    
+    normalized_data = self.normalization(beat_data)
+    peak_time, RRI = pnn.find_RRI(time_data, normalized_data)
     print ("In views.py RRI = ", RRI)
     print ("In views.py peak_time = ", peak_time)
     pnn_time, pnn50 = pnn.cal_pnn(peak_time, RRI)
@@ -79,10 +88,13 @@ class CalcPnnAPI(APIView):
     )
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
+      time = time,
       pnn = pnn50,
       pnn_time = pnn_time
     )
 
     res = {"pnn": float(pnn50), "time": float(pnn_time)}
     json_res = json.dumps(res) 
-    return Response("Data was registered", status=status.HTTP_201_CREATED)
+    serializer = PnnDataSerializer(pnn_data_obj)
+    # return Response("Data was registered", status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
