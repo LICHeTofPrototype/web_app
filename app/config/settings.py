@@ -91,12 +91,40 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# 'default': {
+#     # 環境変数を要設定
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': os.environ.get('LA_DB_NAME', ''),
+#     'USER': os.environ.get('LA_DB_USER', ''),
+#     'PASSWORD': os.environ.get('LA_DB_PASS', ''),
+#     'HOST': os.environ.get('LA_DB_HOST', ''),
+#     'PORT': os.environ.get('LA_DB_PORT', ''),
+#     'TEST': {
+#         'NAME': 'test_database',
+#     },
+#     'OPTIONS' : {
+#         'charset' : 'utf8mb4',
+#     },
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dev_p',
+        'USER': 'root',
+        'PASSWORD': 'aaja2252',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
+
 
 
 # Password validation
