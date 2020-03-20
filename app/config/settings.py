@@ -11,11 +11,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env()
 
+READ_ENV_FILE = True
+if READ_ENV_FILE:
+    env_file = BASE_DIR+'/.env'
+    env.read_env(env_file)
+
+LOG_DIR = os.path.join(BASE_DIR, 'log')
+
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -25,7 +35,7 @@ SECRET_KEY = 'r22&h63=1=h52$$p^2nmz7&51omo(%_+x)_73#m2i@auc#9d*y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.2.111","127.0.0.1"]
+# ALLOWED_HOSTS = ["192.168.2.111","127.0.0.1"]
 
 
 # Application definition
@@ -92,35 +102,35 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbname',
-        'USER': 'dbuser',
-        'PASSWORD': 'password',
-        'HOST': '',
-        'PORT': '',
-    }
-}
-
-# To Do .envファイルから読み込む形式に変更
 # DATABASES = {
-#   'default': {
-#       # 環境変数を要設定
-#       'ENGINE': 'django.db.backends.mysql',
-#       'NAME': os.environ.get('LA_DB_NAME', ''),
-#       'USER': os.environ.get('LA_DB_USER', ''),
-#       'PASSWORD': os.environ.get('LA_DB_PASS', ''),
-#       'HOST': os.environ.get('LA_DB_HOST', ''),
-#       'PORT': os.environ.get('LA_DB_PORT', ''),
-#       'TEST': {
-#           'NAME': 'test_database',
-#       },
-#       'OPTIONS' : {
-#           'charset' : 'utf8mb4',
-#       },
-#   }
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dbname',
+#         'USER': 'dbuser',
+#         'PASSWORD': 'password',
+#         'HOST': '',
+#         'PORT': '',
+#     }
 # }
+
+To Do .envファイルから読み込む形式に変更
+DATABASES = {
+  'default': {
+      # 環境変数を要設定
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': os.environ.get('LA_DB_NAME', ''),
+      'USER': os.environ.get('LA_DB_USER', ''),
+      'PASSWORD': os.environ.get('LA_DB_PASS', ''),
+      'HOST': os.environ.get('LA_DB_HOST', ''),
+      'PORT': os.environ.get('LA_DB_PORT', ''),
+      'TEST': {
+          'NAME': 'test_database',
+      },
+      'OPTIONS' : {
+          'charset' : 'utf8mb4',
+      },
+  }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
