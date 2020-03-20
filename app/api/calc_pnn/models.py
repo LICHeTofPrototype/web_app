@@ -9,6 +9,11 @@ from api.measurement.models import Measurement
 #   RRI = models.FloatField(verbose_name="pnn_time")
 #   peak_time = models.FloatField(verbose_name="pnn_time")
 
+
+class BeatData(models.Model):
+  beat_time = models.FloatField(verbose_name="beat_time")
+  beat_data = models.FloatField(verbose_name="beat_data")
+
 class PnnData(models.Model):
   """心拍数データ"""
   # user = models.ForeignKey(User, on_delete=models.CASCADE)

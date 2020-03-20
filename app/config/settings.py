@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'api.calc_pnn.apps.CalcPnnConfig',
     'api.measurement.apps.MeasurementConfig',
     'front.account.apps.AccountConfig',
+    'visualize.pnn.apps.PnnConfig',
     'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
     'rest_framework.authtoken',
