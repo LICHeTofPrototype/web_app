@@ -13,10 +13,11 @@ from rest_framework.response import Response
 
 from .serializers import UserSerializer, UserSigninSerializer
 from .authentication import token_expire_handler, expires_in
+from django.contrib.auth.views import LoginView as AuthLoginView
 
 @api_view(["POST"])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
-def signin(request):
+def signin_api(request):
     signin_serializer = UserSigninSerializer(data = request.data)
     if not signin_serializer.is_valid():
         return Response(signin_serializer.errors, status = HTTP_400_BAD_REQUEST)
@@ -44,8 +45,14 @@ def signin(request):
 
 
 @api_view(["GET"])
-def user_info(request):
+def user_info_api(request):
     return Response({
         'user': request.user.username,
         'expires_in': expires_in(request.auth)
     }, status=HTTP_200_OK)
+
+class LoginView(AuthLoginView):
+    template_name = 'login.html.haml'
+
+
+login=LoginView.as_view()

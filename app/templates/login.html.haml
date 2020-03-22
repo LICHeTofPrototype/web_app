@@ -1,0 +1,15 @@
+- extends 'base.html'
+- for field in form
+  %div.field
+    %div.ui.input
+      = field
+    - if field.error
+      %p.red.message
+        = field.error.0
+- if form.non_field_errors
+  %div.ui.red.message
+    %ul.list
+      - for non_field_error in form.non_field_errors
+        %li
+          = non_field_error
+
