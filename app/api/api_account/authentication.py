@@ -1,8 +1,11 @@
 from rest_framework.authtoken.models import Token
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
+
+
 
 #this return left time
 def expires_in(token):
@@ -23,6 +26,7 @@ def token_expire_handler(token):
         token.delete()
         token = Token.objects.create(user = token.user)
     return is_expired, token
+
 
 #________________________________________________
 #DEFAULT_AUTHENTICATION_CLASSES

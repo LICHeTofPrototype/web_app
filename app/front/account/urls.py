@@ -1,10 +1,8 @@
 from django.contrib import admin
+from . import views
 from django.urls import path
-from users.views import signin, user_info
-
+from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/v1/signin', signin),
-    path('/v1/signin', user_info),
 ]

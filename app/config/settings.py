@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.calc_pnn.apps.CalcPnnConfig',
+    'api.get_pnn.apps.GetPnnConfig',
+    'api.api_account.apps.ApiAccountConfig',
     'api.measurement.apps.MeasurementConfig',
     'front.account.apps.AccountConfig',
-    'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]
