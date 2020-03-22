@@ -10,7 +10,7 @@ from api.measurement.models import Measurement
 from django.contrib.auth import get_user_model
 from django.db import models 
 from .models import PnnData
-from front.account.serializers import UserSerializer
+from api.api_account.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
 from django.utils import timezone
@@ -21,8 +21,8 @@ User = get_user_model()
 
 class CalcPnnAPI(APIView):
   parser_classes = [JSONParser]
-    
-  def info(msg):
+  
+  def info(self, msg):
     logger = logging.getLogger("command")
     logger.info(msg)
 
