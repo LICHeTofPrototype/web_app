@@ -63,7 +63,7 @@ class CalcPnnAPI(APIView):
     location = "yokohama"
     
     beat_data = [int(s) for s in heart_beat]
-    time_data = [i for i in range(0, len(beat_data)*10, 10)]
+    time_data = [i for i in range(0, len(beat_data)*5, 5)]
     print ("beat len", len(beat_data))
     
     normalized_data = self.normalization(beat_data)

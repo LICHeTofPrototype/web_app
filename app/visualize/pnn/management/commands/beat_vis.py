@@ -23,7 +23,7 @@ class Command(BaseCommand):
             max_value = np.max(beat_data)
             min_value = np.min(beat_data)   
             normalized_data = (beat_data - min_value)/(max_value - min_value)
-            time_data = [i for i in range(0, len(beat_data)*10, 10)]
+            time_data = [i for i in range(0, len(beat_data)*5, 5)]
             peak_time, _, peaks = pnn.find_RRI(time_data, normalized_data)
             time_data = np.array(time_data) * 0.001
             plt.plot(time_data, beat_data)
