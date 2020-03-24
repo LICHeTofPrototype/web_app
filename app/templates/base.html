@@ -9,7 +9,7 @@
 
     {# --- css ---#}
     <link ref="stylesheet" href="{% static 'css/semantic.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/account/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <style type="text/css">
       body{
         background-color: #dadada;
@@ -18,7 +18,7 @@
     {% block extra_css %}{% endblock %}
   </head>
   <body>
-    <div class="ui container">
+    <div class="ui container test">
       {% block content %}{% endblock %}
     </div>
 

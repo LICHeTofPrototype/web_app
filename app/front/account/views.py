@@ -14,6 +14,8 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, UserSigninSerializer
 from .authentication import token_expire_handler, expires_in
 from django.contrib.auth.views import LoginView as AuthLoginView
+from django.views.generic import CreateView
+from .form import CreateUserForm
 
 @api_view(["POST"])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
@@ -51,8 +53,25 @@ def user_info_api(request):
         'expires_in': expires_in(request.auth)
     }, status=HTTP_200_OK)
 
+class CreateUser(CreateView):
+    def post(self, request, *args, **kwargs):
+        form = CreateUserForm(data=request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            # ここでログインさせる
+            return redirect('/')
+        return render(request, 'user/create.html.haml', {'form': form})
+    def get(self, request, *args, **kwargs):
+        form = CreateUserForm(request.POST)
+        return render(request, 'user/create.html.haml', {"form": form})
+create_account = CreateUser.as_view()
+
 class LoginView(AuthLoginView):
-    template_name = 'login.html.haml'
+    template_name = 'user/login.html.haml'
 
 
 login=LoginView.as_view()

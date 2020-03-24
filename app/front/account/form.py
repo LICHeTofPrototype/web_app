@@ -1,6 +1,18 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import User
 
-class LoginForms(forms.From):
+class CreateUserForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class LoginForms(forms.Form):
     email = forms.EmailField(
         label='Eメール',
         max_length = 255,
