@@ -1,0 +1,13 @@
+- extends 'base.html'
+- load static
+- block content
+    %h4{style:"font-size: 1.1em;"} ユーザー登録
+    %form{method:"POST", action:"{% url 'create_account' %}", class: "custom-input-group"}
+        - csrf_token
+        %label.custom-label ユーザー名<br>
+            #{form.username} <br>
+        %label.custom-label メールアドレス<br>
+            #{form.email} <br>
+        %label.custom-label パスワード<br>
+            #{form.password}<br>
+        %button{type:"submit", style:"font-size: 1.2em;margin: 5px;"} 登録
