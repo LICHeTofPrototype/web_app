@@ -4,7 +4,7 @@ from front.account.views import *
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('v1/signin/', signin_api),
     path('v1/user_info/', user_info_api),
     path('signin/', login),

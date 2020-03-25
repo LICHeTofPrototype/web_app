@@ -1,6 +1,7 @@
 
 - extends 'base.html'
 - block content
+  %h4{style:"font-size: 1.1em;"} ログイン
   %div.test
     - for field in form
       %div.field
@@ -16,3 +17,5 @@
           - for non_field_error in form.non_field_errors
             %li
               = non_field_error
+    - if username is not None
+      %h4 username

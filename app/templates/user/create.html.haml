@@ -9,5 +9,13 @@
         %label.custom-label メールアドレス<br>
             #{form.email} <br>
         %label.custom-label パスワード<br>
-            #{form.password}<br>
+            #{form.password1}<br>
+        %label.custom-label パスワード確認用<br>
+            #{form.password2}<br>
         %button{type:"submit", style:"font-size: 1.2em;margin: 5px;"} 登録
+    - if messages
+        %ul
+            - for message in messages
+                %li
+                    #{message}
+                

@@ -82,8 +82,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     SEX_CHOICE = (("M", 'Male'), ("F", 'Female'))
     login_count = models.IntegerField(verbose_name="login_count", default=0)
     which_sex = models.CharField(max_length=1, verbose_name="sex", blank=True)
-    birth_date = models.DateField(verbose_name="birth_date", blank=True)
-    age = models.IntegerField(verbose_name="age", blank=True)
+    birth_date = models.DateField(verbose_name="birth_date", blank=True, null=True)
+    age = models.IntegerField(verbose_name="age", blank=True, null=True)
 
     objects = UserManager()
 
