@@ -14,8 +14,8 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, UserSigninSerializer
-from .authentication import token_expire_handler, expires_in
+from api.api_account.serializers import UserSerializer, SignInSerializer
+from api.api_account.authentication import token_expire_handler, expires_in
 from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
