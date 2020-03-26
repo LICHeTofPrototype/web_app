@@ -171,3 +171,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'front:account:user:sign_in' # get_login_url()呼び出し
+LOGIN_REDIRECT_URL  = 'front:account:user:user_show' # ログイン後の推移先

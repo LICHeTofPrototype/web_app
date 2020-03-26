@@ -1,11 +1,24 @@
-.test{
-    width: 100%;
-    text-align: center;
+.text-left{
+  text-align: left;
 }
-
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.errorlist {
+  color: red;
+  border: 1px solid red;
+  margin-bottom: 0;
+}
+span.errorlist{
+  padding: 2mm;
+}
 input {
-    padding-top: 2mm;
-    padding-bottom: 2mm;
+    padding-top: 1mm;
+    padding-bottom: 1mm;
+    margin-top: 2mm !important;
 }
 .main-menu {
     border-radius:0 !important;
@@ -153,6 +166,9 @@ input {
     height: 24px;
   }
   .custom-input-group {
+  }
+  .custom-input-group label{
+    margin:0;
   }
   .custom-input-group input {
     border: solid 1px #EAEDF2;

@@ -1,0 +1,6 @@
+- extends 'base.html'
+- block content
+    .col-xs-12.col-sm-12.col-md-12.col-lg-12{align:"center"}
+        - if user
+            %p #{user.username}
+            %p #{user.email}

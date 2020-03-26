@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.contrib.auth import logout
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
+from django.urls import reverse_lazy
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -16,9 +18,17 @@ from .serializers import UserSerializer, UserSigninSerializer
 from .authentication import token_expire_handler, expires_in
 from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views.generic import CreateView
+from django.views.generic import TemplateView
+
 from .form import CreateUserForm
+from django.contrib.auth.forms import AuthenticationForm
+
 import logging
 from django.contrib import messages
+
+from django.contrib.auth.mixins import LoginRequiredMixin # authのみ制限する場合
+from django.contrib.auth.mixins import PermissionRequiredMixin # 全てのpermissionで制限する場合
+
 
 @api_view(["POST"])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
@@ -57,6 +67,9 @@ def user_info_api(request):
     }, status=HTTP_200_OK)
 
 class CreateUser(CreateView):
+    form_class = CreateUserForm
+    success_url = reverse_lazy('login')
+    template_name = 'user/create.html.haml'
     def post(self, request, *args, **kwargs):
         form = CreateUserForm(data=request.POST)
         if form.is_valid():
@@ -66,17 +79,30 @@ class CreateUser(CreateView):
             user = authenticate(username=username, password=password)
             # ここでログインさせる
             # login(request, user)
-            return redirect(login)
+            # messages.info(request, form.cleaned_data.get('password'))
+            return redirect(sign_in)
         else:
-            messages.info(request, form.cleaned_data.get('email'))
             return render(request, 'user/create.html.haml', {'form': form})
     def get(self, request, *args, **kwargs):
         form = CreateUserForm(request.POST)
         return render(request, 'user/create.html.haml', {"form": form})
-create_account = CreateUser.as_view()
+sign_up = CreateUser.as_view()
 
-class LoginView(AuthLoginView):
+class Signin(AuthLoginView):
     template_name = 'user/login.html.haml'
+    def post(self, request, *args, **kwargs):
+        form = AuthenticationForm(data = request.POST)
+        if form.is_valid():
+            user = authenticate(username = form.cleaned_data.get('username'), password = form.cleaned_data.get('password'))
+            if not user:
+                raise Exception("user not found.")
+            return render(request, 'user/show.html.haml', {'user': user})
+        else:
+            return render(request, 'user/login.html.haml', {"form": form})
 
+sign_in=Signin.as_view()
 
-login=LoginView.as_view()
+class UserShow(LoginRequiredMixin, TemplateView):
+    template_name = 'user/show.html.haml'
+    
+user_show = UserShow.as_view()
