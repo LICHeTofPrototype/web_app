@@ -21,5 +21,6 @@ urlpatterns = [
     path('front/account/', include('django.contrib.auth.urls')),
     path('v1/api/calc_pnn/', include('api.calc_pnn.urls')),
     path('v1/api/get_pnn/', include('api.get_pnn.urls')),
+    path('v1/api/measurement/', include('api.measurement.urls')),
     path('front/', include('front.account.urls')),
 ]

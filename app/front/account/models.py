@@ -85,6 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     which_sex = models.CharField(max_length=1, verbose_name="sex", blank=True, null=True)
     birth_date = models.DateField(verbose_name="birth_date", blank=True, null=True)
     age = models.IntegerField(verbose_name="age", blank=True, null=True)
+    dev_id = models.IntegerField(verbose_name="dev_id", blank=True, null=True)
 
     objects = UserManager()
 
