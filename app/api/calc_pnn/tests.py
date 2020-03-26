@@ -2,26 +2,39 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework.test import APIRequestFactory
 from rest_framework import status
+from api.calc_pnn.models import *
+from api.measurement.models import Measurement
+#from django.contrib.auth import get_user_model                                                                                                                                     
+#from django.db import models
+from front.account.models import User
 import numpy as np
 import os
 import json
 import matplotlib.pyplot as plt 
+from front.account.models import User
+
+#User = get_user_model()
 
 class Test(APITestCase):
 
   def test_api(self):
     print ("TEST Start")
     print ("-"*40)
-    cwd = os.getcwd()
+    #cwd = os.getcwd()
     #INPUT_DATA = cwd + "/api/calc_pnn/" + "pulse_test_takamiya3.txt" 
-    INPUT_DATA = cwd + "/api/calc_pnn/" + "test_data_0305.json"
-    print ("INPUT DATA = ",INPUT_DATA)
-    jfile = open(INPUT_DATA, "r")
-    json_load = json.load(jfile)
-    print (json_load)
-    time = json_load["time"]
-    beat = json_load["beat"]
-    plt.plot(time, beat)
+    #INPUT_DATA = cwd + "/api/calc_pnn/" + "test_data_0305.json"
+    #print ("INPUT DATA = ",INPUT_DATA)
+    #jfile = open(INPUT_DATA, "r")
+    #json_load = json.load(jfile)
+    #print (json_load)
+    user = User.objects.get(id=2)
+    measurement = Measurement.objects.get(user=user)
+    pnn_time = PnnData.objects.filter(measurement=measurement).values_list('pnn_time', flat=True)
+    pnn_data = PnnData.objects.filter(measurement=measurement).values_list('pnn', flat=True)
+
+    #time = json_load["time"]
+    #beat = json_load["beat"]
+    plt.plot(pnn_time, pnn_data)
     plt.show()
     # (minu, sec, msec, beat, IBI) = np.loadtxt(INPUT_DATA, unpack=True, dtype = None, delimiter=" ")
     # time = minu * 60 * 1000 + sec *1000 + msec

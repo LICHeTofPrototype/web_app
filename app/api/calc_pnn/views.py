@@ -9,8 +9,8 @@ from rest_framework import status
 from api.measurement.models import Measurement
 from django.contrib.auth import get_user_model
 from django.db import models 
-from .models import PnnData
-from api.api_account.serializers import UserSerializer
+from .models import *
+from front.account.serializers import UserSerializer
 from .serializers import PnnDataSerializer
 from . import pnn
 import numpy as np
@@ -22,7 +22,8 @@ User = get_user_model()
 
 class CalcPnnAPI(APIView):
   parser_classes = [JSONParser]
-  def info(self, msg):
+
+  def info(msg):
     logger = logging.getLogger("command")
     logger.info(msg)
 
@@ -56,28 +57,27 @@ class CalcPnnAPI(APIView):
     print ("Request Data = ", request.data)
     time = request.data["time"]
     heart_beat = request.data["beat"]
+    # peaks = request.data["peak"]
     #time = request.data.getlist("time")
     #heart_beat = request.data.getlist("beat")
     location = "yokohama"
     
     beat_data = [int(s) for s in heart_beat]
-    time_data = [i for i in range(0, len(beat_data)*10, 10)]
+    time_data = [i for i in range(0, len(beat_data)*5, 5)]
     print ("beat len", len(beat_data))
-    # print ("time len", len(time_data))
-    # print ("time_data =", time_data)
-
-    # print ("View Heart_beat = ", beat_data[0:3])
-    # print ("View Time = ", time_data[0:3])
     
     normalized_data = self.normalization(beat_data)
-    peak_time, RRI = pnn.find_RRI(time_data, normalized_data)
+    peak_time, RRI, _ = pnn.find_RRI(time_data, normalized_data)
+
     print ("In views.py RRI = ", RRI)
     print ("In views.py peak_time = ", peak_time)
     pnn_time, pnn50 = pnn.cal_pnn(peak_time, RRI)
+    
     print ("View Pnn50 = ", pnn50)
     print ("User id type =", type(user_id))
     user_id = int(user_id)
     print ("User id Reviced type =", type(user_id))
+
     user_obj = User.objects.get(
       id = user_id
     )
@@ -85,11 +85,20 @@ class CalcPnnAPI(APIView):
     measurement_obj, created = Measurement.objects.get_or_create(
       user = user_obj
     )
+    beat_data = ",".join(map(str, beat_data))
+    print("beat data= ", type(beat_data))
+
+    beat_data_obj = BeatData.objects.create(
+      measurement = measurement_obj,
+      time = time,
+      beat_data = beat_data
+    )
+
     pnn_data_obj = PnnData.objects.create(
       measurement = measurement_obj,
       time = time,
-      pnn = pnn50,
-      pnn_time = pnn_time
+      pnn_data = pnn50,
+      pnn_time = pnn_time,
     )
 
     res = {"pnn": float(pnn50), "time": float(pnn_time)}
