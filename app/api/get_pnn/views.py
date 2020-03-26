@@ -9,8 +9,9 @@ from rest_framework import status
 from api.measurement.models import Measurement
 from django.db import models
 from django.contrib.auth import get_user_model
+
 from api.calc_pnn.models import PnnData
-from front.account.serializers import UserSerializer
+from api.api_account.serializers import UserSerializer
 from api.calc_pnn.serializers import PnnDataSerializer
 from django.utils import timezone
 import logging

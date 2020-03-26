@@ -1,5 +1,5 @@
 <!doctype html>
-{% load static %}
+{% load i18n static %}
 <html lang=ja>
   <head>
     <meta charset="utf-8">
@@ -9,6 +9,8 @@
 
     {# --- css ---#}
     <link ref="stylesheet" href="{% static 'css/semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <style type="text/css">
       body{
         background-color: #dadada;
@@ -17,14 +19,15 @@
     {% block extra_css %}{% endblock %}
   </head>
   <body>
-    <div class="ui container">
+    <div class="ui container test">
       {% block content %}{% endblock %}
     </div>
 
     {# --- js --- #}
-    <script src={% static js/jquery-3.3.1.min.js %}></script>
-    <script src={% static js/jquery-ui.min.js %}></script>
-    <script src={% static js/semantic.min.js %}></script>
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- <script src="{% static 'js/jquery-3.4.1.min.map' %}"></script> -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- <script src="{% static 'js/semantic.min.js' %}"></script> -->
     {% block extra_js %}{% endblock %}
   </body>
 </html>

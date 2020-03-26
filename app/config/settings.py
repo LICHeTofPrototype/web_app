@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.calc_pnn.apps.CalcPnnConfig',
+    'api.get_pnn.apps.GetPnnConfig',
+    'api.api_account.apps.ApiAccountConfig',
     'api.measurement.apps.MeasurementConfig',
     'front.account.apps.AccountConfig',
     'visualize.pnn.apps.PnnConfig',
@@ -73,8 +75,8 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': ["./templates"],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -82,9 +84,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': (
+                'hamlpy.template.loaders.HamlPyFilesystemLoader',
+                'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+            ), 
         },
     },
 ]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = [os.path.join(BASE_DIR, 'static')]
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -98,6 +107,34 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# 'default': {
+#     # 環境変数を要設定
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': os.environ.get('LA_DB_NAME', ''),
+#     'USER': os.environ.get('LA_DB_USER', ''),
+#     'PASSWORD': os.environ.get('LA_DB_PASS', ''),
+#     'HOST': os.environ.get('LA_DB_HOST', ''),
+#     'PORT': os.environ.get('LA_DB_PORT', ''),
+#     'TEST': {
+#         'NAME': 'test_database',
+#     },
+#     'OPTIONS' : {
+#         'charset' : 'utf8mb4',
+#     },
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dev_p',
+#         'USER': 'root',
+#         'PASSWORD': 'aaja2252',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+
 
 
 # Password validation
@@ -137,3 +174,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'front:account:user:sign_in' # get_login_url()呼び出し
+LOGIN_REDIRECT_URL  = 'front:account:user:user_show' # ログイン後の推移先

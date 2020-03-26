@@ -4,8 +4,8 @@ astroid==2.3.3
 autopep8==1.2.2
 backports.shutil-get-terminal-size==1.0.0
 decorator==4.0.10
-Django==3.0.4
-django-bootstrap3==9.0.0
+Django==2.2.10
+django-bootstrap4
 django-debug-toolbar==2.2
 django-extensions==1.6.7
 django-hamlpy==1.2
