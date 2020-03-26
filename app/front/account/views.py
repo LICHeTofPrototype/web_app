@@ -66,10 +66,10 @@ def user_info_api(request):
         'expires_in': expires_in(request.auth)
     }, status=HTTP_200_OK)
 
-class CreateUser(CreateView):
+class Signup(CreateView):
     form_class = CreateUserForm
     success_url = reverse_lazy('login')
-    template_name = 'user/create.html.haml'
+    template_name = 'user/signup.html.haml'
     def post(self, request, *args, **kwargs):
         form = CreateUserForm(data=request.POST)
         if form.is_valid():
@@ -82,14 +82,14 @@ class CreateUser(CreateView):
             # messages.info(request, form.cleaned_data.get('password'))
             return redirect(sign_in)
         else:
-            return render(request, 'user/create.html.haml', {'form': form})
+            return render(request, 'user/signup.html.haml', {'form': form})
     def get(self, request, *args, **kwargs):
         form = CreateUserForm(request.POST)
-        return render(request, 'user/create.html.haml', {"form": form})
-sign_up = CreateUser.as_view()
+        return render(request, 'user/signup.html.haml', {"form": form})
+sign_up = Signup.as_view()
 
 class Signin(AuthLoginView):
-    template_name = 'user/login.html.haml'
+    template_name = 'user/signin.html.haml'
     def post(self, request, *args, **kwargs):
         form = AuthenticationForm(data = request.POST)
         if form.is_valid():
@@ -98,7 +98,7 @@ class Signin(AuthLoginView):
                 raise Exception("user not found.")
             return render(request, 'user/show.html.haml', {'user': user})
         else:
-            return render(request, 'user/login.html.haml', {"form": form})
+            return render(request, 'user/signin.html.haml', {"form": form})
 
 sign_in=Signin.as_view()
 
