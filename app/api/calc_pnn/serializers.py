@@ -13,6 +13,6 @@ class PnnDataSerializer(serializers.ModelSerializer):
             'measurement',
             'time',
             'pnn_time',
-            'pnn',
+            'pnn_data',
         ]
         

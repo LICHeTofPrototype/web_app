@@ -6,12 +6,12 @@ from scipy.signal import find_peaks
 #               Find RRI          
 #*******************************************************
 def find_RRI(time, data):       
-    peaks, _ = find_peaks(data, distance=20, prominence=0.5)
+    peaks, _ = find_peaks(data, distance=50, prominence=0.2)#, threshold=0.2)
     print ("In pnn.py peaks = ", peaks)
     peak_time = np.array(time)[peaks] * 0.001
     print ("In pnn.py peak_time = ", peak_time)
     RRI = np.diff(peak_time, n = 1)
-    return peak_time, RRI
+    return peak_time, RRI, peaks
     
 #*******************************************************
 #               Calculation of PNN
