@@ -11,20 +11,20 @@ import logging
 User = get_user_model()
 
 class GetPnnAPI(APIView):
-  def info(self, msg):
-    logger = logging.getLogger("command")
-    logger.info(msg)
+	def info(self, msg):
+    	logger = logging.getLogger("command")
+    	logger.info(msg)
 
-  def post(self, request, format=None):
-    measurement_obj = Measurement.objects.get(
-      id = request.data["measurement_id"],
-      user = request.user
-    )
+  	def post(self, request, format=None):
+    	measurement_obj = Measurement.objects.get(
+			id = request.data["measurement_id"],
+      		user = request.user
+    	)
 
-    pnn_data_obj = PnnData.objects.filter(
-      measurement = measurement_obj,
-      id__gt = request.data["request_index"]
-    )
-    serializer = PnnDataSerializer(pnn_data_obj, many=True)
-    print (serializer.data)
-    return Response(serializer.data)
+    	pnn_data_obj = PnnData.objects.filter(
+      		measurement = measurement_obj,
+      		id__gt = request.data["request_index"]
+    	)
+    	serializer = PnnDataSerializer(pnn_data_obj, many=True)
+    	print (serializer.data)
+    	return Response(serializer.data)

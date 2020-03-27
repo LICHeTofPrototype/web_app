@@ -4,5 +4,6 @@
 	"--disable","W0621,C0111,C0103",
 	"--indent-string=\"  \"",
 	"--indent-after-paren=\"  \"",
+	"[python]": {"editor.tabSize": 4},
     ]
 }
