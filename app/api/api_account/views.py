@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import json
 import logging
 from django.contrib.auth import get_user_model                                                                                                                    from django.db import models

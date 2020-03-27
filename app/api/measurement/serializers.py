@@ -9,6 +9,6 @@ class MeasurementSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'user',
-            'location',
+            'start_time',
         ]
         
