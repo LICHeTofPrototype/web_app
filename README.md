@@ -15,6 +15,6 @@
 1. .output ./dump.txt コマンドで「dump.txt」ファイルを作成（ファイル名は任意）
 1. .dump　コマンドで↑で作成したファイルにsql文を保存
 1. 「DB Browser For Sqlite」を開き、左上の「File」→「import」→「Database from SQL file」で↑で作成したファイルを指定（ここではdump.txt）
-1. 途中で作成されるdbのファイル名を聞かれるが、アプリで設定されているファイル名（デフォルトは「db.sqlite」）にして上書きする
+1. 途中で作成されるdbのファイル名を聞かれるが、アプリで設定されているファイル名（デフォルトは「db.sqlite3」）にして上書きする
 - 参考（「DB Browser For Sqlite」）：https://www.dbonline.jp/sqlite-db-browser/export/index1.html
 - 参考「dumpファイル作成」：https://www.dbonline.jp/sqlite/sqlite_command/index9.html
