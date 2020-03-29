@@ -1,6 +1,13 @@
-- extends 'base.html'
+- extends 'base_chart.html'
 - block content
     .col-xs-12.col-sm-12.col-md-12.col-lg-12{align:"center"}
         - if user
-            %p #{user.username}
-            %p #{user.email}
+            -# %p #{user.username}
+            -# %p #{user.email}
+        - if pnn
+            %canvas{id: "chart"}
+            %input{id:"pnn", type:"hidden", value: pnn}        
+        - else 
+            %p.errorlist does not have pnn yet
+
+

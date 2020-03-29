@@ -8,5 +8,4 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('signin/', sign_in, name='sign_in'),
     path('signup/', sign_up, name='sign_up'),
-    path('show/', user_show, name='user_show'),
 ]
