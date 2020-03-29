@@ -15,10 +15,10 @@ from api.measurement.models import Measurement
 from api.calc_data.models import PnnData
 import json
 
-class CreateUser(CreateView):
+class Signup(CreateView):
     form_class = CreateUserForm
     success_url = reverse_lazy('login')
-    template_name = 'user/create.html.haml'
+    template_name = 'user/signup.html.haml'
     def post(self, request, *args, **kwargs):
         form = CreateUserForm(data=request.POST)
         if form.is_valid():
@@ -31,15 +31,15 @@ class CreateUser(CreateView):
             # messages.info(request, form.cleaned_data.get('password'))
             return redirect(sign_in)
         else:
-            return render(request, 'user/create.html.haml', {'form': form})
+            return render(request, 'user/signup.html.haml', {'form': form})
     def get(self, request, *args, **kwargs):
         form = CreateUserForm(request.POST)
-        return render(request, 'user/create.html.haml', {"form": form})
-sign_up = CreateUser.as_view()
+        return render(request, 'user/signup.html.haml', {"form": form})
+sign_up = Signup.as_view()
 
 
 class Signin(AuthLoginView):
-    template_name = 'user/login.html.haml'
+    template_name = 'user/signin.html.haml'
     def post(self, request, *args, **kwargs):
         form = AuthenticationForm(data = request.POST)
         if form.is_valid():
@@ -51,7 +51,8 @@ class Signin(AuthLoginView):
             print(pnn)
             return render(request, 'user/show.html.haml', {'user': user, 'pnn': pnn})
         else:
-            return render(request, 'user/login.html.haml', {"form": form})
+            return render(request, 'user/signin.html.haml', {"form": form})
+
 sign_in=Signin.as_view()
 
 
