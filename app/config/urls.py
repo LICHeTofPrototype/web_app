@@ -23,4 +23,5 @@ urlpatterns = [
     path('v1/api/get_data/', include('api.get_data.urls')),
     path('v1/api/measurement/', include('api.measurement.urls')),
     path('front/', include('front.account.urls')),
+    path('front/', include('front.plot_data.urls')),
 ]

@@ -10,9 +10,10 @@ from .form import CreateUserForm
 from django.contrib.auth.forms import AuthenticationForm
 import logging
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin # authのみ制限する場合
 from django.contrib.auth.mixins import PermissionRequiredMixin # 全てのpermissionで制限する場合
-
+from api.measurement.models import Measurement
+from api.calc_data.models import PnnData
+import json
 
 class CreateUser(CreateView):
     form_class = CreateUserForm
@@ -45,13 +46,12 @@ class Signin(AuthLoginView):
             user = authenticate(username = form.cleaned_data.get('username'), password = form.cleaned_data.get('password'))
             if not user:
                 raise Exception("user not found.")
-            return render(request, 'user/show.html.haml', {'user': user})
+            measurement = user.measurement_set.all()
+            pnn = list(PnnData.objects.filter(measurement__in = measurement).values_list('pnn_data', flat=True))
+            print(pnn)
+            return render(request, 'user/show.html.haml', {'user': user, 'pnn': pnn})
         else:
             return render(request, 'user/login.html.haml', {"form": form})
 sign_in=Signin.as_view()
 
 
-class UserShow(LoginRequiredMixin, TemplateView):
-    template_name = 'user/show.html.haml'
-    
-user_show = UserShow.as_view()
