@@ -34,13 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.calc_pnn.apps.CalcPnnConfig',
-    'api.get_pnn.apps.GetPnnConfig',
+    'api.calc_data.apps.CalcDataConfig',
+    'api.get_data.apps.GetDataConfig',
     'api.api_account.apps.ApiAccountConfig',
     'api.measurement.apps.MeasurementConfig',
     'front.account.apps.AccountConfig',
     'visualize.pnn.apps.PnnConfig',
-    'api.get_pnn.apps.GetPnnConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -68,6 +67,24 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    # api直叩きの許可
+    'DEFAULT_PERMISSION_CLASSES': (
+       'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'api.api_account.authentication.ExpiringTokenAuthentication',
+    ]
+}
+
+TOKEN_EXPIRED_AFTER_SECONDS = 86400
+
 
 TEMPLATES = [
     {

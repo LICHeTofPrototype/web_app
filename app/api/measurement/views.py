@@ -4,6 +4,7 @@ from rest_framework import status
 from django.db import models
 from django.contrib.auth import get_user_model
 from api.measurement.models import Measurement
+from api.measurement.serializers import MeasurementSerializer
 import logging
 
 User = get_user_model()
@@ -14,6 +15,7 @@ class MeasurementStartAPI(APIView):
         logger.info(msg)
 
     def post(self, request, format=None):
+        print (request.data)
         user_obj = User.objects.get(dev_id = request.data["dev_id"])
         measurement_obj = Measurement.objects.create(
             user = user_obj,
@@ -30,7 +32,8 @@ class MeasurementEndAPI(APIView):
     def post(self, request, format=None):
         user_obj = User.objects.get(dev_id = request.data["dev_id"])
         measurement_obj = Measurement.objects.get(
-            id = request.data["measurement_id"]
+            id = request.data["measurement_id"],
+            user = user_obj
         )
         measurement_obj.end_time = request.data["end_time"]
         measurement_obj.save()

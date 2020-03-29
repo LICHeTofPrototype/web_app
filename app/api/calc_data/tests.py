@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework.test import APIRequestFactory
 from rest_framework import status
-from api.calc_pnn.models import *
+from api.calc_data.models import *
 from api.measurement.models import Measurement
 #from django.contrib.auth import get_user_model                                                                                                                                     
 #from django.db import models

@@ -1,9 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
-import matplotlib.pyplot as plt
-from api.calc_pnn.models import PnnData
-from api.measurement.models import Measurement
 from django.db import models
 from django.contrib.auth import get_user_model
+import matplotlib.pyplot as plt
+from api.calc_data.models import PnnData
+from api.measurement.models import Measurement
 
 User = get_user_model()
 
