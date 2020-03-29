@@ -1,18 +1,18 @@
 from django.core.management.base import BaseCommand, CommandError
-import matplotlib.pyplot as plt
-from api.calc_pnn.models import BeatData
-from api.measurement.models import Measurement
 from django.db import models
 from django.contrib.auth import get_user_model
-from api.calc_pnn import pnn
+import matplotlib.pyplot as plt
 import numpy as np
+from api.measurement.models import Measurement
+from api.calc_data.models import BeatData
+from api.calc_data import pnn
 
 User = get_user_model()
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        user = User.objects.get(id=2)
-        measurement = Measurement.objects.get(user=user)
+        user = User.objects.get(id=1)
+        measurement = Measurement.objects.get(id=13)
 
         # Beat data
         beats_data = BeatData.objects.filter(measurement=measurement).values_list("beat_data", flat=True)
