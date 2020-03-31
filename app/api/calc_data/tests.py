@@ -20,43 +20,27 @@ class Test(APITestCase):
 	def test_api(self):
 		print ("TEST Start")
 		print ("-"*40)
-		#cwd = os.getcwd()
-		#INPUT_DATA = cwd + "/api/calc_pnn/" + "pulse_test_takamiya3.txt" 
-		#INPUT_DATA = cwd + "/api/calc_pnn/" + "test_data_0305.json"
-		#print ("INPUT DATA = ",INPUT_DATA)
-		#jfile = open(INPUT_DATA, "r")
-		#json_load = json.load(jfile)
-		#print (json_load)
-		user = User.objects.get(id=2)
-		measurement = Measurement.objects.get(user=user)
-		pnn_time = PnnData.objects.filter(measurement=measurement).values_list('pnn_time', flat=True)
-		pnn_data = PnnData.objects.filter(measurement=measurement).values_list('pnn', flat=True)
-
-		#time = json_load["time"]
-		#beat = json_load["beat"]
-		plt.plot(pnn_time, pnn_data)
-		plt.show()
-		# (minu, sec, msec, beat, IBI) = np.loadtxt(INPUT_DATA, unpack=True, dtype = None, delimiter=" ")
-		# time = minu * 60 * 1000 + sec *1000 + msec
-		# # print ("TIME = ", time)
-		# # print ("\n"*2)
-		# # print ("BEAT = ", beat)
-		# time_list = list(time[500:1000])
-		# beat_list = list(beat[500:1000])
-		# time_data = [int(s) for s in time_list]
-		# beat_data = [int(s) for s in beat_list]
-		# #print ("TEST time_data = ", time_data)
-		# data = {"time": time_data, "beat": beat_data, "location": "yokohama"}
-		# print ("Test data = ", data)
-
-		# data = {"time": list(time), "beat": list(beat)}
-		# test_file = open("./test_data.txt", "w")
-		# json.dump(data, test_file, indent=2)
 		
-		# user_id = 1
-		# measurement_id =2
-		# request_index = 3
-		# url = reverse("calc-pnn", args=(user_id, measurement_id, request_index, ))
-		# print ("URL = ", url)
-		# response = self.client.post(url, data)
-		# print(response.data) 
+		user_obj = User.objects.create(
+			username= "yukin",
+			first_name="yuki", 
+			last_name="nakagawa", 
+			email="abc@def.com", 
+			password="abc123def", 
+			which_sex="M", 
+			birth_date="1992-7-14", 
+			age=27,
+			dev_id ="1021"
+		)
+		measurement = Measurement.objects.create(
+			user=user_obj,
+			start_time = "2012-12-2 12:20:2"
+		)
+
+		data1 = [
+			"beat": [1,2,3],
+			"time": "12:10:2",
+			"dev_id": "1021"
+		]
+		
+		

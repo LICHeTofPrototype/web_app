@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from api.measurement.models import Measurement
 from api.measurement.serializers import MeasurementSerializer
+from api.calc_data.models import *
 import logging
 
 User = get_user_model()
@@ -20,6 +21,15 @@ class MeasurementStartAPI(APIView):
         measurement_obj = Measurement.objects.create(
             user = user_obj,
             start_time = request.data["start_time"]
+        )
+        beat_obj = BeatData.objects.create(
+            measurement = measurement_obj,
+            beat_data = ""
+        )
+        pnn_data_obj = PnnData.objects.create(
+            measurement = measurement_obj,
+            pnn_data = "",
+            pnn_time = ""
         )
         serializer = MeasurementSerializer(measurement_obj)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -26,10 +26,6 @@ class CalcPnnAPI(APIView):
         normalized_data = (beat_data - min_value)/(max_value - min_value)
         return normalized_data
 
-    def get(self, request, format=json):
-        print ("OK!!!!!!!!!!!")
-        return Response("OK!!!!!!!!")
-
     def post(self, request, format=json):
         time = request.data["time"]
         heart_beat = request.data["beat"]
@@ -52,15 +48,14 @@ class CalcPnnAPI(APIView):
         )
         
         beat_data = ",".join(map(str, beat_data))
-        beat_data_obj = BeatData.objects.create(
-            measurement = measurement_obj,
-            beat_data = beat_data
+        beat_data_obj = BeatData.objects.get(
+            measurement = measurement_obj
         )
-
-        pnn_data_obj = PnnData.objects.create(
-            measurement = measurement_obj,
-            pnn_data = pnn50,
-            pnn_time = pnn_time
+        temp_data = beat_data_obj.beat_data
+        print (beat_data)
+        beat_data_obj.beat_data = temp_data + "," + str(beat_data)
+        pnn_data_obj = PnnData.objects.get(
+            measurement = measurement_obj
         )
 
         serializer = PnnDataSerializer(pnn_data_obj)
