@@ -12,7 +12,7 @@ class PnnData(models.Model):
 	"""心拍数データ"""
 	measurement = models.OneToOneField(Measurement, on_delete=models.CASCADE)
 	# TODO Pnnの時間は現状は測定された心拍データのうち、一番最後に測定された値の時間を用いている。
-	pnn_time = models.TextField(verbose_name="pnn_time")
+	# pnn_time = models.TextField(verbose_name="pnn_time")
 	pnn_data = models.TextField(verbose_name="pnn")
 	
 

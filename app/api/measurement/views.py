@@ -28,8 +28,7 @@ class MeasurementStartAPI(APIView):
         )
         pnn_data_obj = PnnData.objects.create(
             measurement = measurement_obj,
-            pnn_data = "",
-            pnn_time = ""
+            pnn_data = ""
         )
         serializer = MeasurementSerializer(measurement_obj)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
