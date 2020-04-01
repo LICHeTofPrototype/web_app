@@ -22,7 +22,7 @@ SECRET_KEY = 'r22&h63=1=h52$$p^2nmz7&51omo(%_+x)_73#m2i@auc#9d*y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.2.121","127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.2.119","127.0.0.1"]
 
 
 # Application definition
@@ -69,20 +69,20 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-REST_FRAMEWORK = {
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    # api直叩きの許可
-    'DEFAULT_PERMISSION_CLASSES': (
-       'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ],
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'api.api_account.authentication.ExpiringTokenAuthentication',
-    ]
-}
+# REST_FRAMEWORK = {
+#     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+#     # api直叩きの許可
+#     'DEFAULT_PERMISSION_CLASSES': (
+#        'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_PARSER_CLASSES': [
+#         'rest_framework.parsers.JSONParser',
+#     ],
+#     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'api.api_account.authentication.ExpiringTokenAuthentication',
+#     ]
+# }
 
 TOKEN_EXPIRED_AFTER_SECONDS = 86400
 
