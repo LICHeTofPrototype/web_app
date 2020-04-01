@@ -42,13 +42,13 @@ $(function(){
             plugins:{
                 streaming:{
                     duration: 20000,    
-                    refresh: 1000,      
-                    delay: 2000,        
+                    refresh: 2000,      
+                    delay: 6000,        
                     frameRate: 30,      
                     pause: false,       
                     onRefresh: function(chart) {
                         getData().then(response =>{
-                            var pnn = response[count] == undefined ? 0 : response[count].pnn_data
+                            var pnn = response[count] == undefined ? Math.random() : response[count].pnn_data
                             // TODO 表示時間の指定
                             chart.data.datasets[0].data.push({
                                 x: Date.now(),//ここに取得したデータの時間を入れる

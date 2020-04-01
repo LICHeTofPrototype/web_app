@@ -28,5 +28,5 @@ class GetPnnAPI(APIView):
             id__gt = request.data["request_index"]
         )
         serializer = PnnDataSerializer(pnn_data_obj, many=True)
-        print (serializer.data)
+        # print (serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
