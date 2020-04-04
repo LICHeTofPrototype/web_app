@@ -47,9 +47,10 @@ class Signin(AuthLoginView):
             if not user:
                 raise Exception("user not found.")
             measurement = user.measurement_set.all()
+            print(measurement)
             pnn = list(PnnData.objects.filter(measurement__in = measurement).values_list('pnn_data', flat=True))
             print(pnn)
-            return render(request, 'user/show.html.haml', {'user': user, 'pnn': pnn})
+            return render(request, 'user/show.html.haml', {'user': user, 'pnn': pnn, 'user_id': user.id})
         else:
             return render(request, 'user/signin.html.haml', {"form": form})
 

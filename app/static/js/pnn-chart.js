@@ -1,6 +1,7 @@
 $(function(){
-    // var pnn = $("#pnn").val();
-    // if(pnn != undefined){
+    var pnn = $("#pnn").val();
+    var userId = $("#user_id").val();
+    if(pnn == undefined || userId == undefined) return;
     //     pnn = pnn.split(",");
     //     var pnnArray = [];
     //     var time = [];
@@ -9,8 +10,11 @@ $(function(){
     //         pnnArray.push(parseFloat(val.replace("[","").replace("]","")));
     //     });
     // }
-    var count = 0;
-    var canvas = document.getElementById("chart").getContext("2d");
+    var sameTimeCount = 0;
+    var beforeEndTime = '';
+    var pnnArray = [];
+    var requestIndex = 0;
+    var canvas = document.getElementById("chart");//.getContext("2d");
     var chart = new Chart(canvas, {
         type: 'line',
         data: {
@@ -41,25 +45,38 @@ $(function(){
             },
             plugins:{
                 streaming:{
-                    duration: 20000,    
+                    duration: 10000,    
                     refresh: 2000,      
                     delay: 6000,        
                     frameRate: 30,      
                     pause: false,       
                     onRefresh: function(chart) {
-                        getData().then(response =>{
-                            var pnn = response[count] == undefined ? Math.random() : response[count].pnn_data
-                            // TODO 表示時間の指定
+                        if(pnnArray.length > 0){
                             chart.data.datasets[0].data.push({
                                 x: Date.now(),//ここに取得したデータの時間を入れる
-                                y: pnn//ここに取得した値を入れる
+                                y: pnnArray.shift() //ここに取得した値を入れる
                             });
-                            count++;
-                        }).catch(error =>{
-                            count++;
-                            console.info(error);
-                            return error;
-                        });
+                        } else {
+                            getData(parseInt(userId)).then(response =>{
+                                var measurement = response.measurement;
+                                sameTimeCount = measurement.end_time == beforeEndTime ? sameTimeCount+1 : 0;
+                                beforeEndTime = measurement.end_time;
+                                pnnArray = response.pnn_data == undefined ? 0 : sameTimeCount >= 3 ? [0] : response.pnn_data.split(",").splice(requestIndex);
+                                console.info(pnnArray);
+                                requestIndex = pnnArray.length - 1;
+                                console.info(requestIndex);
+                                pnn = pnnArray.shift();
+                                console.info(pnn);
+                                // TODO 表示時間の指定
+                                chart.data.datasets[0].data.push({
+                                    x: Date.now(),//ここに取得したデータの時間を入れる
+                                    y: pnn//ここに取得した値を入れる
+                                });
+                            }).catch(error =>{
+                                console.info(error);
+                                return error;
+                            });    
+                        }
                     }
                 }
             }
@@ -69,10 +86,10 @@ $(function(){
 });
 
 // TODO 現時点では連続して取得する対象のデータを判断できない
-function getData(request_index){
+function getData(userId){
     var body = {
-        measurement_id: 13,
-        request_index: 0
+        // measurement_id: 9
+        user_id: userId
     };
     const url = '/v1/api/get_data/pnn/';
     return fetch(url, {
