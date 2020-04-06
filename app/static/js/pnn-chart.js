@@ -61,12 +61,9 @@ $(function(){
                                 var measurement = response.measurement;
                                 sameTimeCount = measurement.end_time == beforeEndTime ? sameTimeCount+1 : 0;
                                 beforeEndTime = measurement.end_time;
-                                pnnArray = response.pnn_data == undefined ? 0 : sameTimeCount >= 3 ? [0] : response.pnn_data.split(",").splice(requestIndex);
-                                console.info(pnnArray);
-                                requestIndex = pnnArray.length - 1;
-                                console.info(requestIndex);
+                                pnnArray = response.pnn_data == undefined ? [0] : sameTimeCount >= 3 ? [0] : response.pnn_data.split(",").splice(requestIndex);
+                                requestIndex = pnnArray.length;
                                 pnn = pnnArray.shift();
-                                console.info(pnn);
                                 // TODO 表示時間の指定
                                 chart.data.datasets[0].data.push({
                                     x: Date.now(),//ここに取得したデータの時間を入れる
