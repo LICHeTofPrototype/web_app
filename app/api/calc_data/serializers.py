@@ -9,7 +9,7 @@ class PnnDataSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'measurement',
-            'pnn_time',
+            # 'pnn_time',
             'pnn_data',
         ]
         
