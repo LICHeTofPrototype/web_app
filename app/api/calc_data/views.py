@@ -29,6 +29,7 @@ class CalcPnnAPI(APIView):
         print ("IN VIEWS")
         print ("data = ", request.data)
         time = request.data["time"]
+        print ("time", time)
         heart_beat = request.data["beat"]
         # TODO test実行時にapi clientからデータを受け取る際には、下記のスクリプトでrequestからデータを取得。
         #time = request.data.getlist("time")
@@ -47,7 +48,9 @@ class CalcPnnAPI(APIView):
             id = request.data["measurement_id"],
             user = user_obj
         )
-        
+        measurement_obj.end_time = time
+        measurement_obj.save()
+
         beat_data = ",".join(map(str, beat_data))
         beat_data_obj = BeatData.objects.get(
             measurement = measurement_obj
