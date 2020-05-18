@@ -12,15 +12,17 @@ User = get_user_model()
 class Command(BaseCommand):
     def handle(self, *args, **options):
         user = User.objects.get(id=1)
-        measurement = Measurement.objects.get(id=9)
+        measurement = Measurement.objects.get(id=18)
 
         # Beat data
         beats_data = BeatData.objects.get(measurement=measurement).beat_data
         temp_data = beats_data.split(",")
-        beat_data = [int(s) for s in temp_data]
-        time_data = [i for i in range(0, len(beat_data)*10, 10)]
-        plt.plot(time_data[600:1400], beat_data[600:1400])
-        plt.show()
+        beat_data = np.array([int(s) for s in temp_data])
+        time_data = np.array([i for i in range(0, len(beat_data)*10, 10)])*0.001
+        num = int(len(beat_data)/1000)
+        for i in range(num):
+            plt.plot(time_data[800+i*1000:1200+i*1000], beat_data[800+i*1000:1200+i*1000])
+            plt.show()
 
         # for beat_data in beats_data:
         #     beat_data = beat_data.split(",")

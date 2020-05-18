@@ -26,16 +26,14 @@ class CalcPnnAPI(APIView):
         return normalized_data
 
     def post(self, request, format=json):
-        print ("IN VIEWS")
-        print ("data = ", request.data)
+        print ("data=", request.data)
         time = request.data["time"]
-        print ("time", time)
         heart_beat = request.data["beat"]
         # TODO test実行時にapi clientからデータを受け取る際には、下記のスクリプトでrequestからデータを取得。
         #time = request.data.getlist("time")
         #heart_beat = request.data.getlist("beat")
         beat_data = [int(s) for s in heart_beat]
-        time_data = [i for i in range(0, len(beat_data)*5, 5)]
+        time_data = [i for i in range(0, len(beat_data)*10, 10)]
         normalized_data = self.normalization(beat_data)
         peak_time, RRI, _ = pnn.find_RRI(time_data, normalized_data)
 
